@@ -71,13 +71,13 @@ data class Cpf(val value: String) {
     }
 
     private fun validateVerifier() {
-        getVerifier()
+        getExpectedVerifier()
             .also { if (firstVerifierDigit != it) throw InvalidFirstVerifierDigitException(it, firstVerifierDigit) }
-            .let(::getVerifier)
+            .let(::getExpectedVerifier)
             .also { if (secondVerifierDigit != it) throw InvalidSecondVerifierDigitException(it, secondVerifierDigit) }
     }
 
-    private fun getVerifier(anchor: Int? = null): Int {
+    private fun getExpectedVerifier(anchor: Int? = null): Int {
         return unformattedValue
             .removeSuffix(verifier)
             .map(Char::digitToInt)
